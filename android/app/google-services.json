@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "85965214764",
+    "project_id": "iitkms-login",
+    "storage_bucket": "iitkms-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85965214764:android:520ec034805389721d2d89",
+        "android_client_info": {
+          "package_name": "com.example.iitkms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqLbhNlkUJk8JqEcy9Oc1PrKkylZn5TAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
