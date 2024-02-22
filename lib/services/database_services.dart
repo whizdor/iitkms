@@ -11,13 +11,16 @@ class DatabaseService {
 
   //saving the User Data
 
-  Future savingUserData(String fullName, String email) async {
+  Future savingUserData(
+      String fullName, String email, String SubSystem, String Level) async {
     return await userCollection.doc(uid).set({
       "fullName": fullName,
       "email": email,
       "groups": [],
       "profilePic": "",
       "uid": uid,
+      "sub": SubSystem,
+      "level": Level
     });
   }
 

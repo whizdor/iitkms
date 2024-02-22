@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iitkms/helper/helper_function.dart';
+import 'package:iitkms/screens/Download_Page.dart';
 import 'package:iitkms/screens/Login_Page.dart';
-import 'package:iitkms/screens/Profile_Page.dart';
 import 'package:iitkms/screens/Search_Page.dart';
 import 'package:iitkms/screens/Upload_Page.dart';
 import 'package:iitkms/services/auth_services.dart';
@@ -22,6 +22,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String userName = "";
   String email = "";
+  String subsystem = "";
+  String level = "";
   AuthService authService = AuthService();
   Stream? groups;
   bool _isLoading = false;
@@ -50,6 +52,16 @@ class _HomePageState extends State<HomePage> {
     await HelperFunctions.getUserNameFromSF().then((val) {
       setState(() {
         userName = val!;
+      });
+    });
+    await HelperFunctions.getUserSubSystemFromSF().then((val) {
+      setState(() {
+        subsystem = val!;
+      });
+    });
+    await HelperFunctions.getUserLevelFromSF().then((val) {
+      setState(() {
+        level = val!;
       });
     });
     // getting the list of snapshots in our stream
@@ -119,6 +131,18 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white,
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold)),
+            Text(subsystem,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.athiti(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                )),
+            Text(level,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.athiti(
+                  color: Colors.white,
+                  fontSize: 17.0,
+                )),
             const SizedBox(
               height: 30,
             ),
@@ -141,7 +165,14 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
                 onTap: () {
-                  nextScreen(context, UploadPage());
+                  nextScreen(
+                      context,
+                      UploadPage(
+                        userName: userName,
+                        email: email,
+                        subsystem: subsystem,
+                        level: level,
+                      ));
                 },
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -153,15 +184,17 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   nextScreen(
                       context,
-                      ProfilePage(
+                      DonwloadPage(
                         userName: userName,
                         email: email,
+                        subsystem: subsystem,
+                        level: level,
                       ));
                 },
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 leading: const Icon(Icons.group),
-                title: Text("Profile",
+                title: Text("Download File",
                     style: GoogleFonts.athiti(
                         color: Colors.white, fontSize: 20.0))),
             ListTile(
@@ -171,6 +204,7 @@ class _HomePageState extends State<HomePage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
+                          backgroundColor: Colors.black,
                           title: Text("Log Out",
                               style: GoogleFonts.athiti(
                                   color: Colors.white, fontSize: 20.0)),
@@ -213,7 +247,16 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: groupList(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image:
+                AssetImage("assets/images/black-marble-texture-background.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: groupList(),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           popUpDialog(context);
